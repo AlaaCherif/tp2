@@ -2,6 +2,7 @@
 include_once 'fragments/header.php';
 
 include_once 'classes/Repository.php';// okeed ghadi ya ali xD
+include_once 'classes/PersonneRepository.php'; 
 
 /*
  * 1- Récupérer les identifiants
@@ -27,7 +28,11 @@ if(!isset($email))
 if (isset($email) && isset($password)) {
     if ($password == $admin->password && $admin->isAdmin) {
         $_SESSION['user']=$admin->mail;
+
+        $repo = new PersonneRepository();
+        $repo->logMessageCreation("Logged in");
         header('location:home.php');
+        
     } else {
         $_SESSION['errorMessage']="Veuillez vérifier vos credentials";
         header('location:login.php');

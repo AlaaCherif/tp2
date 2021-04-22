@@ -1,17 +1,17 @@
 <?php
+include_once 'fragments/header.php';
 include_once 'isAuthenticated.php';
 $pageTitle = 'home';
-include_once 'fragments/header.php';
 include_once 'classes/PersonneRepository.php';
 $Repo=new PersonneRepository();
 $personnes=$Repo->findAll();
 ?>
 
 <div class="alert alert-success">
-    Welcome 
+    Welcome <?php echo $_SESSION['user']; ?>
 </div>
 
-<table class="table">
+<table class="table table-striped table-Info Info">
 <tr>
     <th>id</th>
     <th>email</th>

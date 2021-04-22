@@ -28,7 +28,7 @@ class PersonneRepository extends Repository
         $response->execute([$id]);
 
         $mail = (self::findById($id))->mail;
-        $actionDescription = self::actionDesc($id,$mail,"removing:");
+        $actionDescription = self::actionDesc($id,$mail,"removing ");
 
     }
     public function addToDatabse($tab)
@@ -44,7 +44,7 @@ class PersonneRepository extends Repository
         $response->execute([]);
         
         $id = (self::findByEmail($tab['mail']))->id;
-        $actionDescription = self::actionDesc($id,$tab['mail'],"adding:");
+        $actionDescription = self::actionDesc($id,$tab['mail'],"adding ");
         ;
     }
 
@@ -66,12 +66,14 @@ class PersonneRepository extends Repository
 
     
     public static function actionDesc($id,$mail,$string){
-        self::logMessageCreation($string." user : mail= ".$mail."id=".$id); 
+        self::logMessageCreation($string."  user( mail= ".$mail.",id=".$id.")"); 
     }
 
     public static function logMessageCreation($actionDesc){
         $currDate = date("Y:m:d:i:sa");
-        self::addLog($currDate . " -- Action by:" .$_SESSION['user']."\n Description:".$actionDesc); //add a log with the action that has taken place;
+        $str = $currDate . " -- " .$_SESSION['user']." -- ".$actionDesc."\n\n";
+        
+        self::addLog($str); //add a log with the action that has taken place;
     }
 
     public static function delete($old){
@@ -101,8 +103,6 @@ class PersonneRepository extends Repository
         }
 
         $newTab = self::findById($tab['id']);
-        $action = "changed to mail=".$newTab->mail. "isAdmin=" .$newTab->isAdmin.   ":";
-        $actionDescription = self::actionDesc($tab['id'],$tab['mail'],$action);
+        $actionDescription = self::actionDesc($tab['id'],$tab['mail'],"modifying ");
     }
-
 }
